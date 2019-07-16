@@ -1,29 +1,77 @@
+
+with open('graph_data.txt', 'r') as file:
+    data = file.read()
+
+
+
 class Vertex:
 
     def __init__(self, v):
         self.name = v
-        self.neighbors = []
+        self.neighbors = set()
 
     def add_neighbor(self, v):
         if v not in self.neighbors:
-            self.neighbors.append(v)
+            self.neighbors.add(v)
 
 
 class Graph:
-    self.vertices = {}
+
+    def __init__(self):
+        self.vertices = {}
 
     def add_vertex(self, vertex):
-        '''Given input should already be a vertex object'''
-        if vertex.name not in self.vertices:
-            self.vertices[vertex.name] = vertex
+        ''' If vertex not in vertices list, add with empty naighbors '''
+        if vertex not in self.vertices:
+            self.vertices[vertex.name] = []
 
     def add_edge(self, u, v):
-        # makes sure it's in the dictionary before adding it
-        if u in self.vertices and v in self.vertices:
-            # go through the vertices to get to the vertex of u and v
-            self.vertices[u].add_neighbor(v)
-            self.vertices[v].add_neighbor(u)
+        ''' In an undirected graph, add u to v's neighbors and v to u's neighbors.
+            In a directed graph, add v to u's neighbor.
 
-    def print_graph(self):
-        for pair in self.vertices.keys():
-            print(self.vertices.values())
+            and add v to u's neighbor in the Vertex class
+        '''
+
+        if u.name in self.vertices and v.name in self.vertices:
+
+            # add v to u neighbors in self.vertices
+            if v.name not in self.vertices[u.name]:
+                self.vertices[u.name].append(v.name)
+            # add u to v neighbors in self.vertices
+            if u.name not in self.vertices[v.name]:
+                self.vertices[v.name].append(u.name)
+
+            # add v to u's neighbors and u to v's neighbors in Vertex class
+            v.add_neighbor(u)
+            u.add_neighbor(v)
+
+
+    def __str__(self):
+        return f'{self.vertices}'
+
+
+friendOne = Vertex("one")
+friendTwo = Vertex("two")
+friendThree = Vertex("three")
+friendFour = Vertex("four")
+
+
+graph = Graph()
+
+graph.add_vertex(friendOne)
+graph.add_vertex(friendTwo)
+graph.add_vertex(friendThree)
+graph.add_vertex(friendFour)
+
+graph.add_edge(friendOne, friendTwo)
+
+print(graph)
+
+
+
+
+
+
+
+
+
