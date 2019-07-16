@@ -1,9 +1,4 @@
 
-with open('graph_data.txt', 'r') as file:
-    data = file.read()
-
-
-
 class Vertex:
 
     def __init__(self, v):
@@ -19,13 +14,14 @@ class Graph:
 
     def __init__(self):
         self.vertices = {}
+        self.edges = {}
 
     def add_vertex(self, vertex):
         ''' If vertex not in vertices list, add with empty naighbors '''
         if vertex not in self.vertices:
             self.vertices[vertex.name] = []
 
-    def add_edge(self, u, v):
+    def add_edge(self, u, v, weight=None):
         ''' In an undirected graph, add u to v's neighbors and v to u's neighbors.
             In a directed graph, add v to u's neighbor.
 
@@ -47,26 +43,88 @@ class Graph:
 
 
     def __str__(self):
-        return f'{self.vertices}'
+        return str(self.vertices)
 
 
-friendOne = Vertex("one")
-friendTwo = Vertex("two")
-friendThree = Vertex("three")
-friendFour = Vertex("four")
+    def form_graph_output(self):
+        print("# Vertices: {}".format(len(self.vertices)))
+        print("# Edges: {}".format(len(self.edges)))
+        print("Edge List:")
 
 
-graph = Graph()
+# friendOne = Vertex("one")
+# friendTwo = Vertex("two")
+# friendThree = Vertex("three")
+# friendFour = Vertex("four")
 
-graph.add_vertex(friendOne)
-graph.add_vertex(friendTwo)
-graph.add_vertex(friendThree)
-graph.add_vertex(friendFour)
 
-graph.add_edge(friendOne, friendTwo)
+# graph = Graph()
 
-print(graph)
+# graph.add_vertex(friendOne)
+# graph.add_vertex(friendTwo)
+# graph.add_vertex(friendThree)
+# graph.add_vertex(friendFour)
 
+# graph.add_edge(friendOne, friendTwo)
+
+# print(graph)
+
+
+'''
+line 1 indicate with 'G' or 'D'. 'G': graph (undirected graph). 'D': Diagram (directed graph)
+line 2 indicating all the vertex numbers
+line 3+ indicating the edges with a weight
+
+
+graph_data.txt file format:
+
+G
+1,2,3,4
+(1,2,10)
+(1,4,5)
+(2,3,5)
+(2,4,7)
+
+'''
+def main():
+    with open('graph_data.txt', 'r') as file:
+
+        graph_type = "G"
+        graph = Graph()
+
+
+        for num, line in enumerate(file):
+            
+            # number type
+            if num == 0:
+                graph_type = line[0]
+
+            # vertex list
+            elif num == 1:
+
+                stripped = line.strip()
+
+                for item in stripped:
+                    if item != ",":     # todo: create algorithm for more a name more than one space
+                        vert = Vertex(item)
+                        graph.add_vertex(vert)
+
+            elif num > 1:
+
+                strip_brackets = line.replace('(', '').replace(')', '')
+                stripped = strip_brackets.strip()
+                arr = stripped.split(',')
+                
+                from_vertex = Vertex(arr[0])
+                to_vertex = Vertex(arr[1])
+
+                graph.add_edge(from_vertex, to_vertex)
+
+
+
+
+if __name__ == "__main__":
+    main()
 
 
 
