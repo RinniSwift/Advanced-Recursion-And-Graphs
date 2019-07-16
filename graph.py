@@ -88,13 +88,10 @@ class Graph:
         # and using the addNeighbor method of the Vertex class.
         # Hint: the vertex f is stored in self.vertList[f].
 
-        vert1 = Vertex(key1)
-        vert2 = Vertex(key2)
-
-        if self.vertList[vert1] != None:
-            self.vertList[vert1].append(vert2)
-            vert1.add_neighbor(vert2, cost)
-            vert2.add_neighbor(vert1, cost)
+        if key1 in self.vertList:
+            self.vertList[key1].append(key2)
+            key1.add_neighbor(key2, cost)
+            key2.add_neighbor(key1, cost)
 
     def get_vertices(self):
         """return all the vertices in the graph"""
@@ -110,32 +107,50 @@ class Graph:
 
 if __name__ == "__main__":
 
-    Challenge 1: Create the graph
+    # Challenge 1: Create the graph
+
+
+    # create friend vertex objects
+
+    friendOne = Vertex("one")
+    friendTwo = Vertex("two")
+    friendThree = Vertex("three")
+    friendFour = Vertex("four")
+
+
+    # create empty graph
 
     g = Graph()
 
-    # Add your friends
-    g.add_vertex("Friend 1")
-    g.add_vertex("Friend 2")
-    g.add_vertex("Friend 3")
 
-    # ...  add all 10 including you ...
+    # add friends
+
+    g.add_vertex(friendOne)
+    g.add_vertex(friendTwo)
+    g.add_vertex(friendThree)
+    g.add_vertex(friendFour)
 
     # Add connections (non weighted edges for now)
-    g.add_edge("Friend 1", "Friend 2")
-    g.add_edge("Friend 2", "Friend 3")
+
+    g.add_edge(friendOne, friendTwo)
+    g.add_edge(friendTwo, friendThree)
+    g.add_edge(friendOne, friendFour)
 
 
     # Challenge 1: Output the vertices & edges
     # Print vertices
+
     print("The vertices are: ", g.get_vertices(), "\n")
 
+
     # Print edges
+
     print("The edges are: ")
     for v in g:
         print(v)
-        for w in v.get_neighbors():
-            print("( %s , %s )" % (v.getId(), w.getId()))
+        if len(v) > 0:
+            for w in v.get_neighbors():
+                print("( %s , %s )" % (v.getId(), w.getId()))
 
 
 
