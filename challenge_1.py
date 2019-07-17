@@ -60,6 +60,13 @@ class Graph:
         print("# Edges: {}".format(len(self.edges)))
         print("Edge List:")
 
+        for dict_item in self.edges:
+            edges_from_item = self.edges[dict_item]
+
+            for item in edges_from_item:
+                print((dict_item.name, item[0].name, item[1]))
+                # print("edge: ({}, {}) with weight of: {}".format(dict_item.name, item[0].name, item[1]))
+
 
 # friendOne = Vertex("one")
 # friendTwo = Vertex("two")
@@ -134,12 +141,13 @@ def main():
 
                 graph.add_edge(from_vertex, to_vertex, arr[2])
 
+        # for dict_item in self.edges:
+        #     edges_from_item = self.edges[dict_item]
 
-        for item in graph.edges:
-            edges_from_item = graph.edges[item]
+        #     for item in edges_from_item:
+        #         print("edge: ({}, {}) with weight of: {}".format(dict_item.name, item[0].name, item[1]))
 
-            for it in edges_from_item:
-                print("edge: ({}, {}) with weight of: {}".format(item.name, it[0].name, it[1]))
+        return graph.form_graph_output()
 
 
 
