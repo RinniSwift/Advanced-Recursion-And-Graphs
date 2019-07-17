@@ -41,6 +41,9 @@ class Graph:
             v.add_neighbor(u)
             u.add_neighbor(v)
 
+            # add_path
+            self.add_path(u, v, weight)
+
     def add_path(self, from_vert, to_vert, weight=1):
         if from_vert not in self.edges:
             self.edges[from_vert] = [(to_vert, weight)]
@@ -129,7 +132,14 @@ def main():
                 from_vertex = Vertex(arr[0])
                 to_vertex = Vertex(arr[1])
 
-                graph.add_edge(from_vertex, to_vertex)
+                graph.add_edge(from_vertex, to_vertex, arr[2])
+
+
+        for item in graph.edges:
+            edges_from_item = graph.edges[item]
+
+            for it in edges_from_item:
+                print("edge: ({}, {}) with weight of: {}".format(item.name, it[0].name, it[1]))
 
 
 
