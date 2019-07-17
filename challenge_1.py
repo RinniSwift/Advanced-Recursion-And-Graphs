@@ -21,7 +21,7 @@ class Graph:
         if vertex not in self.vertices:
             self.vertices[vertex.name] = []
 
-    def add_edge(self, u, v, weight=None):
+    def add_edge(self, u, v, weight=1):
         ''' In an undirected graph, add u to v's neighbors and v to u's neighbors.
             In a directed graph, add v to u's neighbor.
 
@@ -40,6 +40,12 @@ class Graph:
             # add v to u's neighbors and u to v's neighbors in Vertex class
             v.add_neighbor(u)
             u.add_neighbor(v)
+
+    def add_path(self, from_vert, to_vert, weight=1):
+        if from_vert not in self.edges:
+            self.edges[from_vert] = [(to_vert, weight)]
+        else:
+            self.edges[from_vert].append((to_vert, weight))
 
 
     def __str__(self):
@@ -60,14 +66,19 @@ class Graph:
 
 # graph = Graph()
 
-# graph.add_vertex(friendOne)
-# graph.add_vertex(friendTwo)
-# graph.add_vertex(friendThree)
-# graph.add_vertex(friendFour)
+# graph.add_path(friendOne, friendTwo, 5)
+# graph.add_path(friendTwo, friendThree)
+# graph.add_path(friendOne, friendFour)
 
-# graph.add_edge(friendOne, friendTwo)
+# # graph.add_edge(friendOne, friendTwo)
 
-# print(graph)
+# for item in graph.edges:
+#     print(item.name)
+#     edges_from_item = graph.edges[item]
+
+#     for it in edges_from_item:
+#         print("edge: ({}, {}) with weight of: {}".format(item.name, it[0].name, it[1]))
+    
 
 
 '''
