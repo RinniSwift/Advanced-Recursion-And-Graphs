@@ -2,10 +2,16 @@
 class Vertex:
 
     def __init__(self, v):
+        ''' name: representation of the vertex
+            neighbors: a list of vertex objects that self connects to '''
+
         self.name = v
         self.neighbors = set()
 
     def add_neighbor(self, v):
+        ''' adds vertex object to self's neighbor list
+            args: v, vertex object '''
+
         if v not in self.neighbors:
             self.neighbors.add(v)
 
@@ -13,19 +19,27 @@ class Vertex:
 class Graph:
 
     def __init__(self):
-        self.vertices = {}
+        ''' vertices: dict containing keys of the vertex names and values of the vertices neighbors name
+            edges: dict containing keys of the vertex object and values as the vertex it connects to with a weight in a tuple format (vertexObj, weight)
+        '''
+
+        self.vertices = {} 
         self.edges = {}
 
-    def add_vertex(self, vertex):
-        ''' If vertex not in vertices list, add with empty naighbors '''
-        if vertex not in self.vertices:
-            self.vertices[vertex.name] = []
+    def add_vertex(self, v):
+        ''' adds vertex to the vertices list values only if the vertex is unique to others
+            args:  v, vertex object '''
+
+        if v.name not in self.vertices:
+            self.vertices[v.name] = []
 
     def add_edge(self, u, v, weight=1):
-        ''' In an undirected graph, add u to v's neighbors and v to u's neighbors.
-            In a directed graph, add v to u's neighbor.
+        ''' adds v's name into vertices list at u's name
+            adds u's name into verices list at v's name
+            adds both u and v into each of the neighbor vertex object property
+            adds v to u's edge list with weight
 
-            and add v to u's neighbor in the Vertex class
+            Only if both vertices are already in the vertices list
         '''
 
         if u.name in self.vertices and v.name in self.vertices:
@@ -41,10 +55,16 @@ class Graph:
             v.add_neighbor(u)
             u.add_neighbor(v)
 
-            # add_path
-            self.add_path(u, v, weight)
+            # add path
+            self._add_path(u, v, weight)
 
-    def add_path(self, from_vert, to_vert, weight=1):
+    def _add_path(self, from_vert, to_vert, weight=1):
+        ''' if from_vert not in the edges dict, add to the dict with an initial tuple of it's neighbor with the weight
+            if from_vert is in the edges dict, append the neighbor's tuple to the existing list
+            args:   from_vert, a vertex object 
+                    to_vert, a vertex object 
+                    weight, the edges weight, cost, or time '''
+
         if from_vert not in self.edges:
             self.edges[from_vert] = [(to_vert, weight)]
         else:
@@ -52,10 +72,21 @@ class Graph:
 
 
     def __str__(self):
+        ''' returns a string format of the vertices dictionary'''
+
         return str(self.vertices)
 
 
     def form_graph_output(self):
+        ''' helper function to print visual output
+        e.g.
+        G
+        1,2,3,4
+        (1,2,10)
+        (1,4,5)
+        (2,3,5)
+        (2,4,7) '''
+
         print("# Vertices: {}".format(len(self.vertices)))
         print("# Edges: {}".format(len(self.edges)))
         print("Edge List:")
@@ -65,31 +96,6 @@ class Graph:
 
             for item in edges_from_item:
                 print((dict_item.name, item[0].name, item[1]))
-                # print("edge: ({}, {}) with weight of: {}".format(dict_item.name, item[0].name, item[1]))
-
-
-# friendOne = Vertex("one")
-# friendTwo = Vertex("two")
-# friendThree = Vertex("three")
-# friendFour = Vertex("four")
-
-
-# graph = Graph()
-
-# graph.add_path(friendOne, friendTwo, 5)
-# graph.add_path(friendTwo, friendThree)
-# graph.add_path(friendOne, friendFour)
-
-# # graph.add_edge(friendOne, friendTwo)
-
-# for item in graph.edges:
-#     print(item.name)
-#     edges_from_item = graph.edges[item]
-
-#     for it in edges_from_item:
-#         print("edge: ({}, {}) with weight of: {}".format(item.name, it[0].name, it[1]))
-    
-
 
 '''
 line 1 indicate with 'G' or 'D'. 'G': graph (undirected graph). 'D': Diagram (directed graph)
@@ -141,12 +147,6 @@ def main():
 
                 graph.add_edge(from_vertex, to_vertex, arr[2])
 
-        # for dict_item in self.edges:
-        #     edges_from_item = self.edges[dict_item]
-
-        #     for item in edges_from_item:
-        #         print("edge: ({}, {}) with weight of: {}".format(dict_item.name, item[0].name, item[1]))
-
         return graph.form_graph_output()
 
 
@@ -154,11 +154,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
