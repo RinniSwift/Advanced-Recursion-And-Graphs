@@ -1,3 +1,5 @@
+import sys 
+
 
 class Vertex:
 
@@ -110,15 +112,14 @@ G
 
 '''
 def main():
-    with open('graph_data.txt', 'r') as file:
+    with open(sys.argv[1], 'r') as file:
 
         graph_type = "G"
         graph = Graph()
 
-
         for num, line in enumerate(file):
             
-            # number type
+            # graph type
             if num == 0:
                 graph_type = line[0]
 
