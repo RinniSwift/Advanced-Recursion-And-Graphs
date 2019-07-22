@@ -31,7 +31,10 @@ class Graph:
             args:  v, vertex object '''
 
         if v.name not in self.vertices:
-            self.vertices[v.name] = []
+            self.vertices[v.name] = v
+        else:
+            raise KeyError(f"Tried adding an existing vertex: {v.name}")
+        
 
     def add_edge(self, u, v, weight=1):
         ''' adds v's name into vertices list at u's name
@@ -43,13 +46,6 @@ class Graph:
         '''
 
         if u.name in self.vertices and v.name in self.vertices:
-
-            # add v to u neighbors in self.vertices
-            if v.name not in self.vertices[u.name]:
-                self.vertices[u.name].append(v.name)
-            # add u to v neighbors in self.vertices
-            if u.name not in self.vertices[v.name]:
-                self.vertices[v.name].append(u.name)
 
             # add v to u's neighbors and u to v's neighbors in Vertex class
             v.add_neighbor(u)
