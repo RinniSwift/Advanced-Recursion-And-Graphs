@@ -55,6 +55,8 @@ class Graph:
         # Variables:
         # path_of_vertices : a list of vertex objects in the path
         # seen_set : a set of seen vertices
+        path_of_vertices = []
+        seen_set = set()
 
         # create a queue initally with from_vert object
         # loop until the queue is empty
@@ -65,6 +67,24 @@ class Graph:
                 # else add neighbor to the queue
             # if vertex in queue is to_vert, break out and return those vertexes in the array
         # return 'infinite' indicating no path from given vertices
+
+        q = queue.Queue()
+        q.put(from_vert)
+
+        while q:
+            curr_vert = q.get()
+            path_of_vertices.append(curr_vert.name)
+            seen_set.add(curr_vert)
+
+            for neighb in curr_vert.neighbors:
+                if neighb not in seen_set:
+                    q.put(neighb)
+
+            if curr_vert == to_vert:
+                break
+
+
+        return path_of_vertices
 
 
 def main():
@@ -103,7 +123,7 @@ def main():
             for neighb in neighborings:
                 print(f"  {neighb.name}")
 
-        graph.bfs(sys.argv[2], sys.argv[3])
+        print(graph.bfs(graph.vertices[sys.argv[2]], graph.vertices[sys.argv[3]]))
 
         
 
