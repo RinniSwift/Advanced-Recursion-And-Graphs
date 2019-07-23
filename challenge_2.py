@@ -1,4 +1,5 @@
 import sys
+import queue
 
 class Vertex:
 
@@ -51,8 +52,19 @@ class Graph:
 
 
     def bfs(self, from_vert, to_vert):
-        pass
+        # Variables:
+        # path_of_vertices : a list of vertex objects in the path
+        # seen_set : a set of seen vertices
 
+        # create a queue initally with from_vert object
+        # loop until the queue is empty
+            # dequeue and store the vertex in a variable, add vertex oject to the path_of_vertices list
+            # add vertex to seen set
+            # loop through vertex's neighbors
+                # if neighbor is in the seen set, don't enqueue neighbor to the queue
+                # else add neighbor to the queue
+            # if vertex in queue is to_vert, break out and return those vertexes in the array
+        # return 'infinite' indicating no path from given vertices
 
 
 def main():
@@ -90,6 +102,8 @@ def main():
             neighborings = graph.vertices[vert].neighbors
             for neighb in neighborings:
                 print(f"  {neighb.name}")
+
+        graph.bfs(sys.argv[2], sys.argv[3])
 
         
 
