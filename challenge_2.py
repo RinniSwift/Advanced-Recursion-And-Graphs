@@ -1,3 +1,4 @@
+import sys
 
 class Vertex:
 
@@ -19,12 +20,12 @@ class Vertex:
 class Graph:
 
     def __init__(self):
-        ''' vertices: dict containing keys of the vertex names and values of the vertices neighbors name
-            edges: dict containing keys of the vertex object and values as the vertex it connects to with a weight in a tuple format (vertexObj, weight)
+        ''' vertices: dict containing keys of the vertex names and values of the vertex
+            { Vertex.name : Vertex }
+            
         '''
 
-        self.vertices = {} 
-        self.edges = {}
+        self.vertices = {}
 
     def add_vertex(self, v):
         ''' adds vertex to the vertices list values only if the vertex is unique to others
@@ -34,40 +35,93 @@ class Graph:
             self.vertices[v.name] = v
         else:
             raise KeyError(f"Tried adding an existing vertex: {v.name}")
+
+    def add_edge(self, from_vert, to_vert):
+    
+        if from_vert.name in self.vertices and to_vert.name in self.vertices:
+            from_vert.add_neighbor(to_vert)
+            to_vert.add_neighbor(from_vert)
+
+
+    def __str__(self):
+        ''' returns a string format of the vertices dictionary'''
+
+        return str(self.vertices)
+
+
+    def bfs(self, from_vert, to_vert):
+        pass
+
+
+
+def main():
+
+    # file from terminal argv
+    with open(sys.argv[1]) as file:
+
+        # undirected, unweighted graph
+        graph = Graph()
+
+        for num, line in enumerate(file):
+
+            # vertex list
+            if num == 1:
+
+                stripped = line.strip()
+
+                for item in stripped:
+                    if item != ",":     # todo: create algorithm for a name more than one character
+                        vert = Vertex(item)
+                        graph.add_vertex(vert)
+
+            elif num > 1:
+
+                strip_brackets = line.replace('(', '').replace(')', '')
+                stripped = strip_brackets.strip()
+                arr = stripped.split(',')
+                
+                from_vertex = graph.vertices[arr[0]]
+                to_vertex = graph.vertices[arr[1]]
+
+                graph.add_edge(from_vertex, to_vertex)
+
+
+        # sample testing
+        for vert in graph.vertices:
+            print(f"vertex {vert} contains:")
+            neighborings = graph.vertices[vert].neighbors
+            for neighb in neighborings:
+                print(f"  {neighb.name}")
+
         
 
-    def add_edge(self, u, v, weight=1):
-        ''' adds v's name into vertices list at u's name
-            adds u's name into verices list at v's name
-            adds both u and v into each of the neighbor vertex object property
-            adds v to u's edge list with weight
-
-            Only if both vertices are already in the vertices list
-        '''
-
-        if u.name in self.vertices and v.name in self.vertices:
-
-            # add v to u's neighbors and u to v's neighbors in Vertex class
-            v.add_neighbor(u)
-            u.add_neighbor(v)
-
-            # add path
-            self._add_path(u, v, weight)
-
-    def _add_path(self, from_vert, to_vert, weight=1):
-        ''' if from_vert not in the edges dict, add to the dict with an initial tuple of it's neighbor with the weight
-            if from_vert is in the edges dict, append the neighbor's tuple to the existing list
-            args:   from_vert, a vertex object 
-                    to_vert, a vertex object 
-                    weight, the edges weight, cost, or time '''
-
-        if from_vert not in self.edges:
-            self.edges[from_vert] = [(to_vert, weight)]
-        else:
-            self.edges[from_vert].append((to_vert, weight))
 
 
+if __name__ == "__main__":
+    main()
 
 
+'''
 
-            
+terminal call: python3 challenge_2.py graph_data_unweighted_undirected.txt 1 6
+
+argv[1] : textfile
+argv[2] : from_vertex
+argv[3] : to_vertex
+
+Text file input format:
+
+line 1 indicate with 'G' as a undirected and unweighted graph
+line 2 indicating all the vertex names
+line 3+ indicating the edges it connects
+
+G
+1,2,3,4,5
+(1,2)
+(1,4)
+(2,3)
+(2,4)
+(2,5)
+(3,5)
+
+'''
