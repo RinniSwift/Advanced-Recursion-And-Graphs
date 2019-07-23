@@ -10,8 +10,9 @@ class Vertex:
         self.neighbors = set()
 
     def add_neighbor(self, v):
-        ''' adds vertex object to self's neighbor list
-            args: v, vertex object '''
+        ''' adds vertex object to self's neighbor list '''
+        # args: 
+        #   v, vertex object
 
         if v not in self.neighbors:
             self.neighbors.add(v)
@@ -21,15 +22,14 @@ class Graph:
 
     def __init__(self):
         ''' vertices: dict containing keys of the vertex names and values of the vertex
-            { Vertex.name : Vertex }
-            
-        '''
+            { Vertex.name : Vertex } '''
 
         self.vertices = {}
 
     def add_vertex(self, v):
-        ''' adds vertex to the vertices list values only if the vertex is unique to others
-            args:  v, vertex object '''
+        ''' adds vertex to the vertices list values only if the vertex is unique to others '''
+        # args:  
+        #   v, vertex object 
 
         if v.name not in self.vertices:
             self.vertices[v.name] = v
@@ -37,6 +37,7 @@ class Graph:
             raise KeyError(f"Tried adding an existing vertex: {v.name}")
 
     def add_edge(self, from_vert, to_vert):
+        ''' adds vertex to each others neighbors '''
     
         if from_vert.name in self.vertices and to_vert.name in self.vertices:
             from_vert.add_neighbor(to_vert)
@@ -62,23 +63,20 @@ def main():
         # undirected, unweighted graph
         graph = Graph()
 
+        # loop through the files lines
         for num, line in enumerate(file):
 
-            # vertex list
             if num == 1:
-
-                stripped = line.strip()
-
-                for item in stripped:
+ 
+                for item in line.strip():
                     if item != ",":     # todo: create algorithm for a name more than one character
                         vert = Vertex(item)
                         graph.add_vertex(vert)
 
             elif num > 1:
 
-                strip_brackets = line.replace('(', '').replace(')', '')
-                stripped = strip_brackets.strip()
-                arr = stripped.split(',')
+                strip_brackets = line.replace('(', '').replace(')', '').strip()
+                arr = strip_brackets.split(',')
                 
                 from_vertex = graph.vertices[arr[0]]
                 to_vertex = graph.vertices[arr[1]]
