@@ -49,39 +49,27 @@ class Graph:
 
 
     def bfs(self, from_vert, to_vert):
-        # Variables:
-        # path_of_vertices : a list of vertex objects in the path
-        # seen_set : a set of seen vertices
-        path_of_vertices = []
-        seen_set = set()
 
-        # create a queue initally with from_vert object
-        # loop until the queue is empty
-            # dequeue and store the vertex in a variable, add vertex oject to the path_of_vertices list
-            # add vertex to seen set
-            # loop through vertex's neighbors
-                # if neighbor is in the seen set, don't enqueue neighbor to the queue
-                # else add neighbor to the queue
-            # if vertex in queue is to_vert, break out and return those vertexes in the array
-        # return 'infinite' indicating no path from given vertices
+        path_of_vertices = []
 
         q = queue.Queue()
-        q.put(from_vert)
+        seen_set = set()
+        
+        # create a queue with the from_vert vertex initialy in there
+        # set a curr_vert variable to be the dequeued vertex from the queue
+        # add the curr_vert to the seen_set
+        # loop through the curr_vert neighbors
+            # if the curr_vert neighbor is not in the seen set:
+                # add to the seen set
+                # set the .parent varibale equal to the curr_vert
+                # if the neighbor is the to_vert:
+                    # break out
 
-        while q:
-            curr_vert = q.get()
-            path_of_vertices.append(curr_vert.name)
-            seen_set.add(curr_vert)
-
-            for neighb in curr_vert.neighbors:
-                if neighb not in seen_set:
-                    q.put(neighb)
-
-            if curr_vert == to_vert:
-                break
-
-
-        return path_of_vertices
+        # set another curr_vert to equal the to_vert
+        # loop while the curr_vert isn't None
+            # append the curr_vert to a list
+            # update curr_vert to the parent variable
+        # return the path_of_vertices by reversing it
 
 
 def main():
