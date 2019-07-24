@@ -78,22 +78,21 @@ class Graph:
 
         while q:
             curr_vert = q.get()
-            seen_set.add(curr_vert)
+            
+            if curr_vert == to_vert:
+                break
 
             for neighb in curr_vert.neighbors:
                 if curr_vert not in seen_set:
-                    seen_set.add(curr_vert)
                     neighb.add_parent(curr_vert)
                     q.put(neighb)
-                if neighb == to_vert:
-                    break
+                    seen_set.add(curr_vert)
+                
+        while curr_vert is not None:
+            path_of_vertices.append(curr_vert.name)
+            curr_vert = curr_vert.parent
 
-        cur_ver = to_vert
-        while cur_ver != None:
-            path_of_vertices.append(cur_ver)
-            cur_ver = cur_ver.parent
-
-        return path_of_vertices
+        return path_of_vertices[::-1]
 
 
 def main():
