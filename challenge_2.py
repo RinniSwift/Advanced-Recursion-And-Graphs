@@ -9,6 +9,7 @@ class Vertex:
 
         self.name = v
         self.neighbors = set()
+        self.parent = None
 
     def add_neighbor(self, v):
         ''' adds vertex object to self's neighbor list '''
@@ -18,6 +19,8 @@ class Vertex:
         if v not in self.neighbors:
             self.neighbors.add(v)
 
+    def add_parent(self, v):
+        self.parent = v
 
 class Graph:
 
@@ -51,7 +54,6 @@ class Graph:
     def bfs(self, from_vert, to_vert):
 
         path_of_vertices = []
-
         q = queue.Queue()
         seen_set = set()
         
@@ -70,6 +72,28 @@ class Graph:
             # append the curr_vert to a list
             # update curr_vert to the parent variable
         # return the path_of_vertices by reversing it
+
+        q.put(from_vert)
+
+
+        while q:
+            curr_vert = q.get()
+            seen_set.add(curr_vert)
+
+            for neighb in curr_vert.neighbors:
+                if curr_vert not in seen_set:
+                    seen_set.add(curr_vert)
+                    neighb.add_parent(curr_vert)
+                    q.put(neighb)
+                if neighb == to_vert:
+                    break
+
+        cur_ver = to_vert
+        while cur_ver != None:
+            path_of_vertices.append(cur_ver)
+            cur_ver = cur_ver.parent
+
+        return path_of_vertices
 
 
 def main():
