@@ -22,15 +22,12 @@ class Vertex:
 class Graph:
 
     def __init__(self):
-        ''' vertices: dict containing keys of the vertex names and values of the vertex
-            { Vertex.name : Vertex } '''
+        ''' vertices: dict containing keys of the vertex names and values of the vertex { Vertex.name : Vertex } '''
 
         self.vertices = {}
 
     def add_vertex(self, v):
         ''' adds vertex to the vertices list values only if the vertex is unique to others '''
-        # args:  
-        #   v, vertex object 
 
         if v.name not in self.vertices:
             self.vertices[v.name] = v
