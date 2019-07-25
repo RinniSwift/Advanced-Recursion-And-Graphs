@@ -95,6 +95,31 @@ class Graph:
                         # if the neighbor is not in the seen set, add it to there, and append to the arr variable.
                 # by now, all previous items in the arr from the last iteration should be removed and updated with the new vertices from the nieghbors of the previous's
                 
+        arr = [vertex]
+        seen_set = set()
+        seen_set.add(vertex)
+
+        if n == 1:
+            arr = []
+            for nei in vertex.neighbors:
+                arr.append(nei)
+        else: 
+            for iteration in range(n + 1):
+                if iteration == (n):
+                    return [x.id for x in arr]
+
+                values = []
+                for item in arr:
+                    curr_vert = item
+                    for nei in curr_vert.neighbors:
+                        if nei not in seen_set:
+                            seen_set.add(nei)
+                            values.append(nei)
+
+                arr = values
+
+        return [x.id for x in arr]
+        
 
 if __name__ == "__main__":
 
