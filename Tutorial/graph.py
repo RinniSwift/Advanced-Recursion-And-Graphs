@@ -88,37 +88,29 @@ class Graph:
         # if `n` is 1, return all the input array's neighbors
         # if not 1:
             # loop through n amount of times
-                # if the amount of times is equivilent to `n`, return all items in the arr
+                # if the amount of times is equivilent to `n`, return all items in the queue
 
                 # loop through the items in the vertex
                     # loop through the neighbors in the vertex
-                        # if the neighbor is not in the seen set, add it to there, and append to the arr variable.
-                # by now, all previous items in the arr from the last iteration should be removed and updated with the new vertices from the nieghbors of the previous's
+                        # if the neighbor is not in the seen set, add it to there, and append to the queue variable.
+                # by now, all previous items in the queue from the last iteration should be removed and updated with the new vertices from the nieghbors of the previous's
                 
-        arr = [vertex]
+        queue = [vertex]
         seen_set = set()
         seen_set.add(vertex)
 
-        if n == 1:
-            arr = []
-            for nei in vertex.neighbors:
-                arr.append(nei)
-        else: 
-            for iteration in range(n + 1):
-                if iteration == (n):
-                    return [x.id for x in arr]
+        for iteration in range(n):
 
-                values = []
-                for item in arr:
-                    curr_vert = item
-                    for nei in curr_vert.neighbors:
-                        if nei not in seen_set:
-                            seen_set.add(nei)
-                            values.append(nei)
+            neighbors = []
+            for curr_vert in queue:
+                for nei in curr_vert.neighbors:
+                    if nei not in seen_set:
+                        seen_set.add(nei)
+                        neighbors.append(nei)
 
-                arr = values
+            queue = neighbors
 
-        return [x.id for x in arr]
+        return [vert.id for vert in queue]
         
 
 if __name__ == "__main__":
