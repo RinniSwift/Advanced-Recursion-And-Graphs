@@ -1,4 +1,7 @@
 
+import queue
+
+
 '''
 Properties
 
@@ -77,7 +80,21 @@ class Graph:
         """return all the vertices in the graph """
         return self.vertices
 
+    def breadth_first_search(self, vertex, n):
+        """ run breadth first search starting from the input vertex and going `n` levels deep. Return all nodes found at the `n`th level """
 
+        # initialize an array with the input vertex
+        # initialize a set with the input vertex in 
+        # if `n` is 1, return all the input array's neighbors
+        # if not 1:
+            # loop through n amount of times
+                # if the amount of times is equivilent to `n`, return all items in the arr
+
+                # loop through the items in the vertex
+                    # loop through the neighbors in the vertex
+                        # if the neighbor is not in the seen set, add it to there, and append to the arr variable.
+                # by now, all previous items in the arr from the last iteration should be removed and updated with the new vertices from the nieghbors of the previous's
+                
 
 if __name__ == "__main__":
 
@@ -90,6 +107,7 @@ if __name__ == "__main__":
     friendTwo = Vertex("two")
     friendThree = Vertex("three")
     friendFour = Vertex("four")
+    friendFive = Vertex("five")
 
 
     # create empty graph
@@ -103,12 +121,17 @@ if __name__ == "__main__":
     g.add_vertex(friendTwo)
     g.add_vertex(friendThree)
     g.add_vertex(friendFour)
+    g.add_vertex(friendFive)
 
     # Add connections (non weighted edges for now)
 
     g.add_edge(friendOne, friendTwo)
     g.add_edge(friendTwo, friendThree)
     g.add_edge(friendOne, friendFour)
+    g.add_edge(friendTwo, friendFive)
+
+
+    print(f"vertex '{friendOne.id}', connected to {g.breadth_first_search(friendOne, 2)} with 2 levels down")
 
 
     # Challenge 1: Output the vertices & edges
