@@ -12,9 +12,10 @@ class Vertex:
         self.parent = None
 
     def add_neighbor(self, v):
-        ''' adds vertex object to self's neighbor list '''
-        # args: 
-        #   v, vertex object
+        ''' adds vertex object to self's neighbor list 
+            args:
+                v, vertex object
+        '''
 
         if v not in self.neighbors:
             self.neighbors.add(v)
@@ -25,20 +26,27 @@ class Vertex:
 class Graph:
 
     def __init__(self):
-        ''' vertices: dict containing keys of the vertex names and values of the vertex { Vertex.name : Vertex } '''
+        ''' vertices: dict containing keys of the vertex names and values of the vertex object { Vertex.name : Vertex } '''
 
         self.vertices = {}
 
     def add_vertex(self, v):
-        ''' adds vertex to the vertices list values only if the vertex is unique to others '''
+        ''' adds vertex to the vertices list values only if the vertex is unique to others 
+            args:
+                v, vertex object 
+        '''
 
         if v.name not in self.vertices:
             self.vertices[v.name] = v
         else:
-            raise KeyError(f"Tried adding an existing vertex: {v.name}")
+            raise KeyError("Tried adding an existing vertex")
 
     def add_edge(self, from_vert, to_vert):
-        ''' adds vertex to each others neighbors '''
+        ''' adds vertex to each others neighbors 
+            args:
+                from_vert, vertex object at beginning of the path
+                to_vert, vertex object at end of the path
+        '''
     
         if from_vert.name in self.vertices and to_vert.name in self.vertices:
             from_vert.add_neighbor(to_vert)
@@ -46,35 +54,21 @@ class Graph:
 
 
     def __str__(self):
-        ''' returns a string format of the vertices dictionary'''
+        ''' a string format of all the vertices in the graph with it's neighbors '''
 
-        return str(self.vertices)
+        for vert in self.vertices:
+            print(f"vertex '{vert}' contains neighbors: {[x.name for x in self.vertices[vert].neighbors]}")
+        return ""
 
 
     def bfs(self, from_vert, to_vert):
+        ''' returns a list of all vertices in the shortest path from starting and ending vertex indicated by the parameters '''
 
         path_of_vertices = []
         q = queue.Queue()
         seen_set = set()
-        
-        # create a queue with the from_vert vertex initialy in there
-        # set a curr_vert variable to be the dequeued vertex from the queue
-        # add the curr_vert to the seen_set
-        # loop through the curr_vert neighbors
-            # if the curr_vert neighbor is not in the seen set:
-                # add to the seen set
-                # set the .parent varibale equal to the curr_vert
-                # if the neighbor is the to_vert:
-                    # break out
-
-        # set another curr_vert to equal the to_vert
-        # loop while the curr_vert isn't None
-            # append the curr_vert to a list
-            # update curr_vert to the parent variable
-        # return the path_of_vertices by reversing it
 
         q.put(from_vert)
-
 
         while q:
             curr_vert = q.get()
@@ -83,8 +77,9 @@ class Graph:
                 break
 
             for neighb in curr_vert.neighbors:
-                if curr_vert not in seen_set:
+                if neighb not in seen_set:
                     neighb.add_parent(curr_vert)
+                    # neighb.parent = curr_vert
                     q.put(neighb)
                     seen_set.add(curr_vert)
                 
@@ -125,12 +120,13 @@ def main():
 
 
         # sample testing
-        for vert in graph.vertices:
-            print(f"vertex {vert} contains:")
-            neighborings = graph.vertices[vert].neighbors
-            for neighb in neighborings:
-                print(f"  {neighb.name}")
+        # for vert in graph.vertices:
+        #     print(f"vertex {vert} contains:")
+        #     neighborings = graph.vertices[vert].neighbors
+        #     for neighb in neighborings:
+        #         print(f"  {neighb.name}")
 
+        print(graph)
         print(graph.bfs(graph.vertices[sys.argv[2]], graph.vertices[sys.argv[3]]))
 
         
