@@ -86,25 +86,32 @@ class Graph:
         while curr_vert is not None:
             path_of_vertices.append(curr_vert.name)
             curr_vert = curr_vert.parent
+        
+        path = path_of_vertices[::-1]
 
-        return path_of_vertices[::-1]
+        return f"Vertices in the shortest path: {[x for x in path]}\nNumber of edges in shortest path: {len(path) - 1} "
 
 
 def main():
 
-    # file from terminal argv
-    with open(sys.argv[1]) as file:
+    graph = create_graph_from_file(sys.argv[1])
 
-        # undirected, unweighted graph
+    from_vert = graph.vertices[sys.argv[2]]
+    to_vert = graph.vertices[sys.argv[3]]
+    print(graph.bfs(from_vert, to_vert))
+
+
+def create_graph_from_file(file):
+    ''' returns a graph object created from the indicated file '''
+
+    with open(file) as f:
         graph = Graph()
 
-        # loop through the files lines
-        for num, line in enumerate(file):
+        for num, line in enumerate(f):
 
             if num == 1:
- 
                 for item in line.strip():
-                    if item != ",":     # todo: create algorithm for a name more than one character
+                    if item != ",":
                         vert = Vertex(item)
                         graph.add_vertex(vert)
 
@@ -119,18 +126,7 @@ def main():
                 graph.add_edge(from_vertex, to_vertex)
 
 
-        # sample testing
-        # for vert in graph.vertices:
-        #     print(f"vertex {vert} contains:")
-        #     neighborings = graph.vertices[vert].neighbors
-        #     for neighb in neighborings:
-        #         print(f"  {neighb.name}")
-
-        print(graph)
-        print(graph.bfs(graph.vertices[sys.argv[2]], graph.vertices[sys.argv[3]]))
-
-        
-
+        return graph
 
 
 if __name__ == "__main__":
