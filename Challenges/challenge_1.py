@@ -112,13 +112,20 @@ G
 
 '''
 def main():
-    with open(sys.argv[1], 'r') as file:
 
-        graph_type = "G"
-        graph = Graph()
+    graph = create_graph_from_file(sys.argv[1])
+    return graph.form_graph_output()
 
-        for num, line in enumerate(file):
-            
+
+def create_graph_from_file(file):
+    ''' returns a graph object created from the given file '''
+    graph = Graph()
+
+
+    with open(file, 'r') as f:
+
+        for num, line in enumerate(f):
+
             # graph type
             if num == 0:
                 graph_type = line[0]
@@ -144,9 +151,7 @@ def main():
 
                 graph.add_edge(from_vertex, to_vertex, arr[2])
 
-        return graph.form_graph_output()
-
-
+        return graph
 
 
 if __name__ == "__main__":
