@@ -58,7 +58,7 @@ class Graph:
         return ""
 
 
-    def dfs(self, from_vert, to_vert, seen_set=set()):
+    def dfs_recursive(self, from_vert, to_vert, seen_set=set()):
         path_of_vertices = []
 
         seen_set.add(from_vert)
@@ -69,9 +69,30 @@ class Graph:
             if neighb not in seen_set and not None:
                 self.dfs(neighb, to_vert, seen_set)
 
-        return False
+    def dfs_iteritive(self, from_vert, to_vert):
 
+        seen_set = set()
+        stack = [from_vert]
 
+        vertices_in_path = []
+        
+        while stack:
+            vert = stack.pop()
+
+            if vert == to_vert:
+                vertices_in_path.append(vert)
+                return vertices_in_path
+
+            if vert.neighbors != None:
+                vertices_in_path.append(vert)
+            for neighb in vert.neighbors:
+                if neighb not in seen_set:
+                    stack.append(neighb)
+                    seen_set.add(neighb)
+
+        
+
+        return []
 
 
 
@@ -84,7 +105,9 @@ def main():
 
     from_vert = graph.vertices[sys.argv[2]]
     to_vert = graph.vertices[sys.argv[3]]
-    print(graph.dfs(from_vert, to_vert))
+    path = graph.dfs_iteritive(from_vert, to_vert)
+
+    print(f"Vertices in shortest path: {[x.name for x in path]}\nNumber of edges in shortest path: {len(path) - 1}")
 
 
 def create_graph_from_file(file):
