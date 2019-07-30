@@ -79,18 +79,16 @@ class Graph:
         while stack:
             vert = stack.pop()
 
-            if vert == to_vert:
-                vertices_in_path.append(vert)
-                return vertices_in_path
-
             if vert.neighbors != None:
                 vertices_in_path.append(vert)
+
             for neighb in vert.neighbors:
+                if neighb == to_vert:
+                    vertices_in_path.append(neighb)
+                    return vertices_in_path
                 if neighb not in seen_set:
                     stack.append(neighb)
-                    seen_set.add(neighb)
-
-        
+                    seen_set.add(neighb) 
 
         return []
 
