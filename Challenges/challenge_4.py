@@ -30,18 +30,17 @@ def knapsack(C, items):
 
 	if item.weight > C:
 		return knapsack(C, items[1:])
-	else:
 
-		val_with_item, items_used_with = knapsack(C - item.weight, items[1:])
-		val_with_item += item.value
+	val_with_item, items_used_with = knapsack(C - item.weight, items[1:])
+	val_with_item += item.value
 
-		val_without_item, items_used_without = knapsack(C, items[1:])
+	val_without_item, items_used_without = knapsack(C, items[1:])
 
-		if val_with_item >= val_without_item:
-			items_used_with.append(item.name)
-			return (val_with_item, items_used_with)
+	if val_with_item >= val_without_item:
+		items_used_with.append(item.name)
+		return (val_with_item, items_used_with)
 
-		return (val_without_item, items_used_without)
+	return (val_without_item, items_used_without)
 
 
 		
