@@ -39,7 +39,7 @@ knapsack(50, items)
 
 # Edit Distance
 
-[editDistance.py](https://github.com/RinniSwift/Advanced-Recursion-And-Graphs/blob/master/Challenges/Challenge4/edit_distance.py)
+[edit_distance.py](https://github.com/RinniSwift/Advanced-Recursion-And-Graphs/blob/master/Challenges/Challenge4/edit_distance.py)
 
 *A method to determine the minimum amount of edits between to convert str_1 to str_2*
 
@@ -62,7 +62,7 @@ str_2 = "saturday"
 print(edit_distance(str_1, str_2, len(str_1), len(str_2)))
 ```
 
-> Output:
-> 1
+> Output:\
+> 1\
 > 3
 
