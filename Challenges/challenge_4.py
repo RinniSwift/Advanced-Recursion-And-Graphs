@@ -43,12 +43,18 @@ def knapsack(C, items):
 	return (val_without_item, items_used_without)
 
 
-		
-
-
 items = [Item("boot", 10, 60),
 		 Item("tent", 20, 100),
 		 Item("water", 30, 120),
 		 Item("first aid", 15, 70)]
 
-print(knapsack(50, items))
+
+
+def main():
+	values = knapsack(50, items)
+
+	print(f"The value of the optimal solution to the knapsack problem is: {values[0]}")
+	print(f"The items included in the knapsack for this optimal solution are {values[1]}")
+
+if __name__ == "__main__":
+    main()
