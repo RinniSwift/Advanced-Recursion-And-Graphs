@@ -1,4 +1,7 @@
 # Knapsack problem
+
+[knapsack.py](https://github.com/RinniSwift/Advanced-Recursion-And-Graphs/blob/master/Challenges/Challenge4/knapsack.py)
+
 *A  method to determine the maximum value of the items included in the knapsack without exceeding the capacity*
 
 ```python
