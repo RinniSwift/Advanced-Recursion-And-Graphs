@@ -58,24 +58,32 @@ class Graph:
         return ""
 
 
-    def dfs_recursive_helper(self, from_vert, to_vert, seen_set=None, path=[]):
+    def dfs_recursive(self, from_vert, to_vert, seen_set=None):
+        ''' searches for path that connects both vertices input recursively using the call stack.
+            args: from_vert, starting vertex object
+                  to_vert, ending vertex object
+                  seen_set, set containing all seen vertices
+        '''
         if seen_set == None:
             seen_set = set()
+
+        if from_vert == to_vert:
             seen_set.add(from_vert)
+            return [x.name for x in seen_set]
 
+        if from_vert not in seen_set:
+            seen_set.add(from_vert)
+            for neighb in from_vert.neighbors:
+                return self.dfs_recursive(neighb, to_vert, seen_set)
 
-        for neighb in from_vert.neighbors:
-            if neighb == to_vert:
-                path.append(neighb)
-                return path
+        return [x.name for x in seen_set]
 
-            if neighb not in seen_set and not None:
-                seen_set.add(neighb)
-                self.dfs_recursive_helper(neighb, to_vert, seen_set, path)
-
-        return path
 
     def dfs_iteritive(self, from_vert, to_vert):
+        ''' searches for path that connects both vertices input iteratively with a stack.
+            args: from_vert, starting vertex object
+                  to_vert, ending vertex object
+        '''
 
         seen_set = set()
         stack = [from_vert]
@@ -113,9 +121,11 @@ def main():
 
     from_vert = graph.vertices[sys.argv[2]]
     to_vert = graph.vertices[sys.argv[3]]
-    path = graph.dfs_recursive_helper(from_vert, to_vert)
+    print(graph.dfs_recursive(from_vert, to_vert))
 
-    print(f"Vertices in shortest path: {[x.name for x in path]}\nNumber of edges in shortest path: {len(path) - 1}")
+    # print(path)
+
+    # print(f"Vertices in shortest path: {[x.name for x in path]}\nNumber of edges in shortest path: {len(path) - 1}")
 
 
 def create_graph_from_file(file):
@@ -157,45 +167,3 @@ def create_graph_from_file(file):
 
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-'''
-
-terminal call: python3 challenge_3.py graph_data_directed.txt 1 5
-
-argv[1] : textfile
-argv[2] : from_vertex
-argv[3] : to_vertex
-
-Text file input format:
-
-line 1 indicate with 'G' as a undirected and unweighted graph
-line 2 indicating all the vertex names
-line 3+ indicating the edges it connects
-
-G
-1,2,3,4,5
-(1,2)
-(1,4)
-(2,3)
-(2,4)
-(2,5)
-(3,5)
-
-'''
-
-
