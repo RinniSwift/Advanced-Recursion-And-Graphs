@@ -34,6 +34,7 @@ class Graph:
 > `vertices`: dictionary with *key* of vertex's name and *value* of the `Vertex` \
 > `edges`: dictionary with *key* of `Vertex` and *value* of an array of tuples where the tuple at 0 is the `Vertex` it connects to with the tuple at 1 is the weight the both vertices connect with
 
+---
 
 ### About
 
