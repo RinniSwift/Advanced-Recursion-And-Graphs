@@ -1,3 +1,6 @@
+## Breadth First Search
+*Finding the vertices in the shortest path from one vertex on the graph to the other vertex on the graph*
+
 ### Vertex
 
 *representation of nodes on the graph*
