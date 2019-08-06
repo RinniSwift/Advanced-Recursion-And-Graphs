@@ -17,3 +17,7 @@ def edit_distance(str_1, str_2, m, n):
 str1 = "happy"
 str2 = "happpy"
 print(edit_distance(str1, str2, len(str1), len(str2)))
+
+str_1 = "sunday"
+str_2 = "saturday"
+print(edit_distance(str_1, str_2, len(str_1), len(str_2)))

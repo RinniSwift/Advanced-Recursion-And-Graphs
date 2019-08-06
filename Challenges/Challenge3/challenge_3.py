@@ -58,16 +58,22 @@ class Graph:
         return ""
 
 
-    def dfs_recursive(self, from_vert, to_vert, seen_set=set()):
-        path_of_vertices = []
+    def dfs_recursive_helper(self, from_vert, to_vert, seen_set=None, path=[]):
+        if seen_set == None:
+            seen_set = set()
+            seen_set.add(from_vert)
 
-        seen_set.add(from_vert)
-        if from_vert == to_vert:
-            return True
 
         for neighb in from_vert.neighbors:
+            if neighb == to_vert:
+                path.append(neighb)
+                return path
+
             if neighb not in seen_set and not None:
-                self.dfs(neighb, to_vert, seen_set)
+                seen_set.add(neighb)
+                self.dfs_recursive_helper(neighb, to_vert, seen_set, path)
+
+        return path
 
     def dfs_iteritive(self, from_vert, to_vert):
 
@@ -78,6 +84,10 @@ class Graph:
         
         while stack:
             vert = stack.pop()
+
+            if vert == to_vert:
+                vertices_in_path.append(vert)
+                return vertices_in_path
 
             if vert.neighbors != None:
                 vertices_in_path.append(vert)
@@ -103,7 +113,7 @@ def main():
 
     from_vert = graph.vertices[sys.argv[2]]
     to_vert = graph.vertices[sys.argv[3]]
-    path = graph.dfs_iteritive(from_vert, to_vert)
+    path = graph.dfs_recursive_helper(from_vert, to_vert)
 
     print(f"Vertices in shortest path: {[x.name for x in path]}\nNumber of edges in shortest path: {len(path) - 1}")
 
